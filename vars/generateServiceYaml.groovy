@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 def call(String name, int containerPort, int servicePort) {
-    def service="""
+    def yaml="""
 apiVersion: v1
 kind: Service
 metadata:
@@ -15,8 +15,9 @@ spec:
   - name: http
     port: ${servicePort}
     targetPort: ${containerPort}
-    """
-    return service
+"""
+
+    return yaml
 }
 
-return this;
+return this
