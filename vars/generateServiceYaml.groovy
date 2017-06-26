@@ -15,6 +15,9 @@ spec:
   - name: http
     port: ${servicePort}
     targetPort: ${containerPort}
+  selector:
+    project: demo
+    app: ${name}
 """
 
     return yaml
