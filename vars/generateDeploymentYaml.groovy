@@ -20,6 +20,8 @@ spec:
       nodeSelector:
         cluster.tier: app
         project: demo
+      imagePullSecrets:
+      - name: nexus-private-registry
       containers:
       - name: ${name}
         image: ${image}
