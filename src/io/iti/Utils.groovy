@@ -3,8 +3,8 @@ package io.iti
 
 def getProjectConfig() {
     def config = [
-            'name': System.getenv('PROJECT_NAME'),
-            'docker_registry': System.getenv('PROJECT_DOCKER_REGISTRY')
+            'name': env.PROJECT_NAME,
+            'docker_registry': env.PROJECT_DOCKER_REGISTRY
     ]
     return config
 }

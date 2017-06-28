@@ -5,7 +5,7 @@ def call(String service, String version, String path, String credentialId) {
 
     def config = utils.getProjectConfig()
     def image = "${config.docker_registry}/${config.name}/${service}:${version}"
-    sh "docker built -t ${image} ${path}"
+    sh "docker build -t ${image} ${path}"
 
     utils.dockerLogin(config.docker_registry, credentialId)
     sh "docker push ${image}"
