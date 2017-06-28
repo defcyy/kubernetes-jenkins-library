@@ -32,7 +32,7 @@ def deploymentDefination(String serviceName, int replicas, int containerPort, St
     def content = readFile defaultDeploymentTpl
     def template = new StreamingTemplateEngine().createTemplate(content)
 
-    return template.make(binding)
+    return template.make(binding).toString()
 }
 
 
@@ -48,7 +48,7 @@ def serviceDefination(String serviceName, int servicePort, int containerPort) {
     def content = readFile defaultServiceTpl
     def template = new StreamingTemplateEngine().createTemplate(content)
 
-    return template.make(binding)
+    return template.make(binding).toString()
 }
 
 return this
