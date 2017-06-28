@@ -1,13 +1,12 @@
 #!/usr/bin/env groovy
 
 def call(String service, String version, String path, String credentialId) {
-    def utils = new io.iti.Utils()
+    def common = new org.iti.Common()
 
-    def config = utils.getProjectConfig()
-    def image = "${config.docker_registry}/${config.name}/${service}:${version}"
+    def image = common.dockerImage(service, version)
+
     sh "docker build -t ${image} ${path}"
-
-    utils.dockerLogin(config.docker_registry, credentialId)
+    utils.dockerLogin(common.projectConfig.docker_registry, credentialId)
     sh "docker push ${image}"
 }
 
