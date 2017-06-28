@@ -2,7 +2,6 @@
 package org.iti
 
 import java.nio.file.Paths
-import groovy.text.StreamingTemplateEngine
 
 def config = new org.iti.Config()
 def projectConfig = config.getProjectConfig()
@@ -41,7 +40,7 @@ def serviceDefination(String serviceName, int servicePort, int containerPort) {
 
     def defaultServiceTpl = Paths.get(projectConfig.template_path, 'service-tpl.yaml')
     def content = readFile defaultServiceTpl
-    def template = new StreamingTemplateEngine.createTemplate(content)
+    def template = new groovy.text.StreamingTemplateEngine().createTemplate(content)
 
     return template.make(binding)
 }
