@@ -1,11 +1,12 @@
 #!/usr/bin/env groovy
 package org.iti
 
-import java.nio.file.Paths
 import groovy.text.StreamingTemplateEngine
 
+import java.nio.file.Paths
+
 def config = new org.iti.Config()
-def projectConfig = config.getProjectConfig()
+projectConfig = config.getProjectConfig()
 
 def dockerLogin(String credentialId) {
     def registry = projectConfig.docker_registry
