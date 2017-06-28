@@ -16,7 +16,7 @@ def dockerLogin(String credentialId) {
 def dockerImage(String serviceName, String version) {
     def projectConfig = new Config().getProjectConfig()
 
-    return "${projectConfig.docker}/${projectConfig.name}/${serviceName}:${version}"
+    return "${projectConfig.docker_registry}/${projectConfig.name}/${serviceName}:${version}"
 }
 
 def deploymentDefination(String serviceName, int replicas, int containerPort, String version) {

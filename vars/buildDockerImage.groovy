@@ -8,6 +8,7 @@ def call(String service, String version, String path, String credentialId) {
 
     common.dockerLogin(credentialId)
     sh "docker push ${image}"
+    sh "docker rmi ${image}"
 }
 
 return this
