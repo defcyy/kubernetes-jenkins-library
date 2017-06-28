@@ -28,7 +28,7 @@ def deploymentDefination(String serviceName, int replicas, int containerPort, St
 
     def binding = [project: project, service: service, container: container]
 
-    def defaultDeploymentTpl = Paths.get(projectConfig.template_path, 'deployment-tpl.yaml')
+    def defaultDeploymentTpl = Paths.get(projectConfig.template_path, 'deployment-tpl.yaml').toString()
     def content = readFile defaultDeploymentTpl
     def template = new StreamingTemplateEngine().createTemplate(content)
 
@@ -44,7 +44,7 @@ def serviceDefination(String serviceName, int servicePort, int containerPort) {
     def container = [port: containerPort]
     def binding = [project: project, service: service, container: container]
 
-    def defaultServiceTpl = Paths.get(projectConfig.template_path, 'service-tpl.yaml')
+    def defaultServiceTpl = Paths.get(projectConfig.template_path, 'service-tpl.yaml').toString()
     def content = readFile defaultServiceTpl
     def template = new StreamingTemplateEngine().createTemplate(content)
 
