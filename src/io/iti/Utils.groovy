@@ -1,14 +1,12 @@
 #!/usr/bin/env groovy
 package io.iti
 
-@Grab('org.yaml:snakeyaml:1.18')
-import org.yaml.snakeyaml.Yaml
-
 def getProjectConfig() {
-    def configFile = "/etc/project/config.yaml"
-    Yaml parser = new Yaml()
-    Map map = (Map) parser.load((configFile as File).text)
-    return map
+    def config = [
+            'name': System.getenv('PROJECT_NAME'),
+            'docker_registry': System.getenv('PROJECT_DOCKER_REGISTRY')
+    ]
+    return config
 }
 
 def dockerLogin(String registry, String credentialId) {
