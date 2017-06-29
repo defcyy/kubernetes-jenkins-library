@@ -19,10 +19,10 @@ def dockerImage(String serviceName, String version) {
     return "${projectConfig.docker_registry}/${projectConfig.name}/${serviceName}:${version}"
 }
 
-def deploymentDefination(String serviceName, int replicas, int containerPort, String version) {
+def deploymentDefination(String environment, String serviceName, int replicas, int containerPort, String version) {
     def projectConfig = new Config().getProjectConfig()
 
-    def project = [name: projectConfig.name]
+    def project = [name: projectConfig.name, env: environment]
     def service = [name: serviceName, replicas: replicas]
     def container = [image: dockerImage(serviceName, version), port: containerPort]
 
@@ -35,11 +35,10 @@ def deploymentDefination(String serviceName, int replicas, int containerPort, St
     return template.make(binding).toString()
 }
 
-
-def serviceDefination(String serviceName, int servicePort, int containerPort) {
+def serviceDefination(Sring environment, String serviceName, int servicePort, int containerPort) {
     def projectConfig = new Config().getProjectConfig()
 
-    def project = [name: projectConfig.name]
+    def project = [name: projectConfig.name, env: environment]
     def service = [name: serviceName, port: servicePort]
     def container = [port: containerPort]
     def binding = [project: project, service: service, container: container]
