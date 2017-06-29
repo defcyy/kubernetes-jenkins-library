@@ -35,7 +35,7 @@ def deploymentDefination(String environment, String serviceName, int replicas, i
     return template.make(binding).toString()
 }
 
-def serviceDefination(Sring environment, String serviceName, int servicePort, int containerPort) {
+def serviceDefination(String environment, String serviceName, int servicePort, int containerPort) {
     def projectConfig = new Config().getProjectConfig()
 
     def project = [name: projectConfig.name, env: environment]
