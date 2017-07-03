@@ -19,10 +19,13 @@ def call(body) {
     def common = new org.iti.Common()
     def version = config.get('version', env.BUILD_NUMBER)
     def deployment = common.deploymentDefination(config.environment, config.service, config.replicas, config.containerPort, version)
-    kubernetesApply(deployment)
+    common.kubernetesApply(deployment)
 
     def service = common.serviceDefination(config.environment, config.service, config.servicePort, config.containerPort)
-    kubernetesApply(service)
+    common.kubernetesApply(service)
+
+    def namespace = common.getNamespace(config.environment)
+    sh "kubectl rollout status deployment/${config.service} --namespace ${namespace}"
 }
 
 return this

@@ -19,6 +19,12 @@ def dockerImage(String serviceName, String version) {
     return "${projectConfig.docker_registry}/${projectConfig.name}/${serviceName}:${version}"
 }
 
+def getNamespace(String environment) {
+    def projectConfig = new Config().getProjectConfig()
+
+    return "${projectConfig.name}-${environment}"
+}
+
 def deploymentDefination(String environment, String serviceName, int replicas, int containerPort, String version) {
     def projectConfig = new Config().getProjectConfig()
 
@@ -66,5 +72,16 @@ def getDockerfileBaseImage(String dockerfile) {
 def dockerfilePath(String path) {
     return Paths.get(path, 'Dockerfile').toString()
 }
+
+def kubernetesApply(String content) {
+    def cmd = """cat <<EOF | kubectl apply -f -
+${content}
+EOF
+
+"""
+    sh "${cmd}"
+}
+
+return this
 
 return this
