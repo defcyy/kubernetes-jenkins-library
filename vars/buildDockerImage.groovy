@@ -15,8 +15,8 @@ def call(body) {
 
     def common = new org.iti.Common()
 
-    def defaultVersion = env.BUILD_NUMBER
-    def image = common.dockerImage(config.service, config.get('version', defaultVersion))
+    def version = config.get('version', env.BUILD_NUMBER)
+    def image = common.dockerImage(config.service, version)
     def path = config.get('path', '.')
 
     def hasDockerfile = fileExists common.dockerfilePath(path)

@@ -17,7 +17,8 @@ def call(body) {
     body()
 
     def common = new org.iti.Common()
-    def deployment = common.deploymentDefination(config.environment, config.service, config.replicas, config.containerPort, config.version)
+    def version = config.get('version', env.BUILD_NUMBER)
+    def deployment = common.deploymentDefination(config.environment, config.service, config.replicas, config.containerPort, version)
     kubernetesApply(deployment)
 
     def service = common.serviceDefination(config.environment, config.service, config.servicePort, config.containerPort)

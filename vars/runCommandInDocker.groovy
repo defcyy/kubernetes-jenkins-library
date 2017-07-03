@@ -14,7 +14,8 @@ def call(body) {
     body()
 
     def common = new org.iti.Common()
-    def image = common.dockerImage(config.service, config.version)
+    def version = config.get('version', env.BUILD_NUMBER)
+    def image = common.dockerImage(config.service, version)
 
     sh "docker run --rm ${image} sh -c '${config.command}'"
 }
