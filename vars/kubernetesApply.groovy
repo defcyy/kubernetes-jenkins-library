@@ -1,11 +1,20 @@
 #!/usr/bin/env groovy
 
-def call(String yaml) {
+/*
+kubernetesApply {
+    file: content
+}
+ */
+def call(body) {
+    def config = [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = config
+    body()
 
-    echo "apply kubernetes resource:\n" + yaml
+    echo "apply kubernetes resource:\n" + config.file
 
     def cmd = """cat <<EOF | kubectl apply -f -
-${yaml}
+${config.file}
 EOF
 
 """

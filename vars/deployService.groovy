@@ -1,12 +1,26 @@
 #!/usr/bin/env groovy
 
-def call(String environment, String serviceName, int replicas, int containerPort, int servicePort, String version) {
-    def common = new org.iti.Common()
+/*
+deployService {
+    environment: 'test',
+    service: 'service_name',
+    replicas: container_count,
+    servicePort: service_port,
+    containerPort: container_port,
+    version: image_version
+}
+*/
+def call(body) {
+    def config = [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = config
+    body()
 
-    def deployment = common.deploymentDefination(environment, serviceName, replicas, containerPort, version)
+    def common = new org.iti.Common()
+    def deployment = common.deploymentDefination(config.environment, config.service, config.replicas, config.containerPort, config.version)
     kubernetesApply(deployment)
 
-    def service = common.serviceDefination(environment, serviceName, servicePort, containerPort)
+    def service = common.serviceDefination(config.environment, config.service, config.servicePort, config.containerPort)
     kubernetesApply(service)
 }
 

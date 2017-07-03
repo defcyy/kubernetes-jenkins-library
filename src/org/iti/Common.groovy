@@ -50,4 +50,21 @@ def serviceDefination(String environment, String serviceName, int servicePort, i
     return template.make(binding).toString()
 }
 
+def getDockerfileBaseImage(String dockerfile) {
+    def content = readFile dockerfile
+    def baseImage = ""
+    content.readLines().each { line ->
+        def cmd = line.trim().replaceAll("( )+", " ").tokenize()
+        if (cmd[0] != null && cmd[0].toUpperCase() == "FROM") {
+            baseImage = cmd[1]
+        }
+    }
+
+    return baseImage
+}
+
+def dockerfilePath(String path) {
+    return Paths.get(path, 'Dockerfile').toString()
+}
+
 return this
