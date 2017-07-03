@@ -2,12 +2,12 @@
 
 /*
 deployService {
-    environment: 'test',
-    service: 'service_name',
-    replicas: container_count,
-    servicePort: service_port,
-    containerPort: container_port,
-    version: image_version
+    environment = 'test'
+    service = 'service_name'
+    replicas = container_count
+    servicePort = service_port
+    containerPort = container_port
+    version = image_version
 }
 */
 def call(body) {

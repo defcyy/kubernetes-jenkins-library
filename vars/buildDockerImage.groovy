@@ -2,9 +2,9 @@
 
 /*
 buildDockerImage {
-    service: 'service_name',
-    version: 'image_version',
-    path: 'dockerfile_path'
+    service = 'service_name'
+    version = 'image_version'
+    path = 'dockerfile_path'
 }
  */
 def call(body) {
@@ -15,7 +15,8 @@ def call(body) {
 
     def common = new org.iti.Common()
 
-    def image = common.dockerImage(config.service, config.version)
+    def defaultVersion = env.BUILD_NUMBER
+    def image = common.dockerImage(config.service, config.get('version', defaultVersion))
     def path = config.get('path', '.')
 
     def hasDockerfile = fileExists common.dockerfilePath(path)

@@ -2,7 +2,7 @@
 
 /*
 kubernetesApply {
-    file: content
+    file = content
 }
  */
 def call(body) {

@@ -1,5 +1,12 @@
 #!/usr/bin/env groovy
 
+/*
+runCommandInDocker {
+    service = 'service_name'
+    version = 'service'
+    command = 'command'
+}
+ */
 def call(body) {
     def config = [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
