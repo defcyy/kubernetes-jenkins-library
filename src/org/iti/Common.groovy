@@ -74,7 +74,7 @@ def dockerfilePath(String path) {
 }
 
 def workspacePath(String path) {
-    return Paths.get(env.WORKSPACE, path).toString()
+    return Paths.get(env.WORKSPACE, path).normalize().toString()
 }
 
 def kubernetesApply(String content) {
