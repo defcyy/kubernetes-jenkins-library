@@ -22,15 +22,14 @@ def call(body) {
     def dockerfile = common.dockerfilePath(path)
     def hasDockerfile = fileExists dockerfile
     if (!hasDockerfile) {
-        echo "Dockerfile not found!"
-        return false
+        error "Dockerfile not found!"
     }
 
     def projectConfig = new org.iti.Config().getProjectConfig()
     def baseImage = common.getDockerfileBaseImage(dockerfile)
     if (!baseImage.startsWith(projectConfig.docker_registry)) {
-        echo "Docker base image is not forbidden!"
-        return false
+        echo "Docker base image must from registry ${projectConfig.docker_registry}"
+        error "Docker base image is not forbidden!"
     }
 
     sh "docker build -t ${image} ${path}"
