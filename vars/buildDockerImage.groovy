@@ -28,8 +28,7 @@ def call(body) {
     def projectConfig = new org.iti.Config().getProjectConfig()
     def baseImage = common.getDockerfileBaseImage(dockerfile)
     if (!baseImage.startsWith(projectConfig.docker_registry)) {
-        echo "Docker base image must from registry ${projectConfig.docker_registry}"
-        error "Docker base image is not forbidden!"
+        error "Docker base image is not forbidden! Docker base image must from registry ${projectConfig.docker_registry}"
     }
 
     sh "docker build -t ${image} ${path}"
