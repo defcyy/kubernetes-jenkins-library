@@ -26,6 +26,9 @@ def call(body) {
 
     def namespace = common.getNamespace(config.environment)
     sh "kubectl rollout status deployment/${config.service} --namespace ${namespace}"
+
+    def image = common.getServiceImage(config.environment, config.service)
+    echo "Deploy done! current service image ${image}"
 }
 
 return this

@@ -98,6 +98,13 @@ EOF
     sh "${cmd}"
 }
 
+def getServiceImage(String environment, String service) {
+    def namespace = getNamespace(environment)
+    def imageCmd = "kubectl get deployment ${service}  --namespace ${namespace} -o jsonpath='{.spec.template.spec.containers[0].image}'"
+    def image = sh script: "${imageCmd}", returnStdout: true
+    return image.trim()
+}
+
 return this
 
 return this
