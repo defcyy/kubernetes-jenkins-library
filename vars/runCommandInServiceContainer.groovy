@@ -18,7 +18,7 @@ def call(body) {
     def image = common.dockerImage(config.service, version)
 
     def volumeFlag = ""
-    if (config.workspacePath != null & config.containerPath != null) {
+    if (config.workspacePath != null && config.containerPath != null) {
         def path = common.workspaceHostPath(config.workspacePath)
         volumeFlag = "-v ${path}:${config.containerPath}"
     }
