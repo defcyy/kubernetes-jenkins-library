@@ -22,13 +22,15 @@ def call(body) {
     def dockerfile = common.dockerfilePath(path)
     def hasDockerfile = fileExists dockerfile
     if (!hasDockerfile) {
-        throw new RuntimeException('dockerfile is not exists!')
+        echo "Dockerfile not found!"
+        return false
     }
 
     def projectConfig = new org.iti.Config().getProjectConfig()
     def baseImage = common.getDockerfileBaseImage(dockerfile)
     if (!baseImage.startsWith(projectConfig.docker_registry)) {
-        throw new RuntimeException('base image is not forbidden')
+        echo "Docker base image is not forbidden!"
+        return false
     }
 
     sh "docker build -t ${image} ${path}"
