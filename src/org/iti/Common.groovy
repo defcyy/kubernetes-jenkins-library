@@ -86,7 +86,7 @@ def workspaceHostPath(String path) {
     def hostPathCmd = "docker inspect ${containerId} -f '{{ range .Mounts }}{{ if eq .Destination \"/workspace\" }}{{ .Source }}{{ end }}{{ end }}'"
     def hostPath = sh script: "${hostPathCmd}", returnStdout: true
 
-    return Paths.get(hostPath, path).normalize().toString()
+    return Paths.get(hostPath.trim(), env.JOB_NAME, path).normalize().toString()
 }
 
 def kubernetesApply(String content) {

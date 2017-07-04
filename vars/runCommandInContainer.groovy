@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 /*
-runCommandInDocker {
+runCommandInContainer {
     image = 'image'
     version = 'service'
     command = 'command'
