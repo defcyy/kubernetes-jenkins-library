@@ -5,7 +5,8 @@ runCommandInDocker {
     image = 'image'
     version = 'service'
     command = 'command'
-    volume = 'v1:v1'
+    workspacePath = '.'
+    containerPath = '/home/'
 }
  */
 def call(body) {
@@ -16,7 +17,7 @@ def call(body) {
 
     def common = new org.iti.Common()
     def projectConfig = new org.iti.Config().getProjectConfig()
-    def image = "${projectConfig.docker_registry}/${image}:${version}"
+    def image = "${projectConfig.docker_registry}/${config.image}:${config.version}"
 
     def volumeFlag = ""
     if (config.workspacePath != null & config.containerPath != null) {
