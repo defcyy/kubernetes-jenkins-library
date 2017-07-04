@@ -73,6 +73,10 @@ def dockerfilePath(String path) {
     return Paths.get(path, 'Dockerfile').toString()
 }
 
+def workspacePath(String path) {
+    return Paths.get(env.WORKSPACE, path).toString()
+}
+
 def kubernetesApply(String content) {
     def cmd = """cat <<EOF | kubectl apply -f -
 ${content}

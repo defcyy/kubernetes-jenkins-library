@@ -1,11 +1,10 @@
 #!/usr/bin/env groovy
 
 /*
-runCommandInDocker {
-    image = 'image'
+runCommandInServiceContainer {
+    service = 'service_name'
     version = 'service'
     command = 'command'
-    volume = 'v1:v1'
 }
  */
 def call(body) {
@@ -15,8 +14,8 @@ def call(body) {
     body()
 
     def common = new org.iti.Common()
-    def projectConfig = new org.iti.Config().getProjectConfig()
-    def image = "${projectConfig.docker_registry}/${image}:${version}"
+    def version = config.get('version', env.BUILD_NUMBER)
+    def image = common.dockerImage(config.service, version)
 
     def volumeFlag = ""
     if (config.workspacePath != null & config.containerPath != null) {
