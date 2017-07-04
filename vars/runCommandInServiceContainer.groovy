@@ -19,7 +19,7 @@ def call(body) {
 
     def volumeFlag = ""
     if (config.workspacePath != null & config.containerPath != null) {
-        def path = common.workspacePath(config.workspacePath)
+        def path = common.workspaceHostPath(config.workspacePath)
         volumeFlag = "-v ${path}:${config.containerPath}"
     }
 

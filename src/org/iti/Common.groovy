@@ -77,6 +77,18 @@ def workspacePath(String path) {
     return Paths.get(env.WORKSPACE, path).normalize().toString()
 }
 
+def workspaceHostPath(String path) {
+
+    def getContainerCmd = "kubectl get pod \${HOSTNAME} -o jsonpath='{.status.containerStatuses[0].containerID}'"
+    def container = sh script: "${getContainerCmd}", returnStdout: true
+    def containerId = container.trim().replace('docker://', '')
+
+    def hostPathCmd = "docker inspect ${containerId} -f '{{ range .Mounts }}{{ if eq .Destination \"/workspace\" }}{{ .Source }}{{ end }}{{ end }}'"
+    def hostPath = sh script: "${hostPathCmd}", returnStdout: true
+
+    return Paths.get(hostPath, path).normalize().toString()
+}
+
 def kubernetesApply(String content) {
     def cmd = """cat <<EOF | kubectl apply -f -
 ${content}
