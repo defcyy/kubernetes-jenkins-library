@@ -25,7 +25,14 @@ def call(body) {
         volumeFlag = "-v ${path}:${config.containerPath} -w ${config.containerPath}"
     }
 
-    sh "docker run --rm ${volumeFlag} ${image} sh -c '${config.command}'"
+    def envsFlag = ""
+    if (config.envVariables != null) {
+        config.envVariables.each { env ->
+            envsFlag += " -e ${env.name}=${env.value}"
+        }
+    }
+
+    sh "docker run --rm ${volumeFlag} ${envsFlag} ${image} sh -c '${config.command}'"
 }
 
 return this

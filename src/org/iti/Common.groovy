@@ -25,14 +25,14 @@ def getNamespace(String environment) {
     return "${projectConfig.name}-${environment}"
 }
 
-def deploymentDefination(String environment, String serviceName, int replicas, int containerPort, String version) {
+def deploymentDefination(String environment, String serviceName, int replicas, int containerPort, String version, Map... environments) {
     def projectConfig = new Config().getProjectConfig()
 
     def project = [name: projectConfig.name, env: environment]
     def service = [name: serviceName, replicas: replicas]
     def container = [image: dockerImage(serviceName, version), port: containerPort]
 
-    def binding = [project: project, service: service, container: container]
+    def binding = [project: project, service: service, container: container, environments: environments]
 
     def defaultDeploymentTpl = Paths.get(projectConfig.template_path, 'deployment-tpl.yaml').toString()
     def content = readFile defaultDeploymentTpl

@@ -8,6 +8,7 @@ deployService {
     servicePort = service_port
     containerPort = container_port
     version = image_version
+    envVariables = []
 }
 */
 def call(body) {
@@ -18,7 +19,8 @@ def call(body) {
 
     def common = new org.iti.Common()
     def version = config.get('version', env.BUILD_NUMBER)
-    def deployment = common.deploymentDefination(config.environment, config.service, config.replicas, config.containerPort, version)
+    def envVariables = config.get('envVariables', [])
+    def deployment = common.deploymentDefination(config.environment, config.service, config.replicas, config.containerPort, version, envVariables)
     common.kubernetesApply(deployment)
 
     def service = common.serviceDefination(config.environment, config.service, config.servicePort, config.containerPort)
