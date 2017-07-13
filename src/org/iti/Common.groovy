@@ -25,7 +25,7 @@ def getNamespace(String environment) {
     return "${projectConfig.name}-${environment}"
 }
 
-def deploymentDefination(String environment, String serviceName, int replicas, int containerPort, String version, Map... environments) {
+def deploymentDefination(String environment, String serviceName, int replicas, int containerPort, String version, Map[] environments) {
     def projectConfig = new Config().getProjectConfig()
 
     def project = [name: projectConfig.name, env: environment]
